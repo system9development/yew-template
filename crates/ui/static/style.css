@@ -1,0 +1,10 @@
+.login {
+    max-width: 256px;
+    margin-top: 24px;
+}
+
+.login-input {
+    margin: 2px;
+    padding: 2px;
+
+}
