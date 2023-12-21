@@ -1,11 +1,9 @@
 mod users;
 
 use axum::{
-    body::Body,
     error_handling::HandleErrorLayer,
-    http::{Method, Request, StatusCode},
-    response::{IntoResponse, Redirect},
-    routing::get,
+    http::{StatusCode},
+    response::{IntoResponse},
     BoxError,
 };
 use axum_login::{
@@ -22,17 +20,14 @@ mod protected;
 use crate::users::Backend;
 use eyre::Result;
 
-use std::path::PathBuf;
-use tower::ServiceExt;
-use tower_http::{
-    cors::{AllowCredentials, AllowPrivateNetwork},
-    services::ServeDir,
-};
 
-use axum::response::Html;
-use tokio::fs;
 
-use tower_http::cors::{Any, CorsLayer};
+
+
+
+
+
+use tower_http::cors::{CorsLayer};
 
 const STATIC_DIR: &str = "dist/";
 pub struct App {

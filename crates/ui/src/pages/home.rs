@@ -1,42 +1,18 @@
-use super::BACKEND_URL;
+
 use crate::routes::Route;
-use common::Credentials;
+
 use eyre::Result;
 use yew::prelude::*;
 use yew_hooks::prelude::*;
 use yew_router::prelude::*;
 
 pub(crate) async fn fetch_login() -> Result<String> {
-    // let cookie_store = {
-    //     let file = std::fs::File::open("cookies.json")
-    //         .map(std::io::BufReader::new)
-    //         .unwrap();
-    //     // use re-exported version of `CookieStore` for crate compatibility
-    //     reqwest_cookie_store::CookieStore::load_json(file).unwrap()
-    // };
-    // let cookie_store = reqwest_cookie_store::CookieStoreMutex::new(cookie_store);
-    // let cookie_store = std::sync::Arc::new(cookie_store);
-    // {
-    //     // Examine initial contents
-    //     println!("initial load");
-    //     let store = cookie_store.lock().unwrap();
-    //     for c in store.iter_any() {
-    //         println!("{:?}", c);
-    //     }
-    // }
-    // let client = reqwest::ClientBuilder::new().cookie_store(true).build()?;
-    // Ok(client
-    //     .get(format!("{}/protected", BACKEND_URL))
-    //     // .header("", value)
-    //     .send()
-    //     .await?
-    //     .text()
-    //     .await?)
-
     let response = gloo::net::http::Request::get("/api/protected")
         .send()
+        .await?
+        .text()
         .await?;
-    Ok(response.text().await?)
+    Ok(response)
 }
 
 #[function_component(Home)]
