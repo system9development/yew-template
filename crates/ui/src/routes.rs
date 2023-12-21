@@ -1,4 +1,4 @@
-use crate::pages::{home::*, login::*, protected::*};
+use crate::pages::{home::*, login::*};
 use yew::prelude::*;
 use yew_router::prelude::*;
 
@@ -8,8 +8,6 @@ pub(crate) enum Route {
     Login,
     #[at("/home")]
     Home,
-    #[at("/protected")]
-    Protected,
     #[not_found]
     #[at("/404")]
     NotFound,
@@ -21,9 +19,6 @@ pub(crate) fn switch(routes: Route) -> Html {
             <h1>
                 <Home/>
             </h1>
-        },
-        Route::Protected => html! {
-            <Protected/>
         },
         Route::Login => html! {
             <Login/>

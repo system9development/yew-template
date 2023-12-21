@@ -1,25 +1,25 @@
-
 use crate::routes::Route;
 
-use eyre::Result;
+use eyre::{eyre, Result};
 use yew::prelude::*;
 use yew_hooks::prelude::*;
 use yew_router::prelude::*;
 
-pub(crate) async fn fetch_login() -> Result<String> {
+pub(crate) async fn check_login() -> Result<String> {
     let response = gloo::net::http::Request::get("/api/protected")
         .send()
-        .await?
-        .text()
         .await?;
-    Ok(response)
+    match response.status() {
+        200 | 202 => Ok(response.text().await?),
+        x => Err(eyre!("{x:?}")),
+    }
 }
 
 #[function_component(Home)]
 pub(crate) fn home() -> Html {
     let state = use_async_with_options(
         async move {
-            fetch_login().await.map_err(|e| {
+            check_login().await.map_err(|e| {
                 tracing::error!("authentication failed...{e:?}");
                 "unexpected error".to_string()
             })
@@ -48,10 +48,9 @@ pub(crate) fn home() -> Html {
                 }
             }
             {
-                if let Some(error) = &state.error {
+                if let Some(_error) = &state.error {
                     navigator.push(&Route::Login);
-
-                    html! { error }
+                    html! { }
                 } else {
                     html! {}
                 }
@@ -73,7 +72,7 @@ mod tests {
         // assert!(result.is_expected()); // Replace with your condition
         // You can add more assertions here
         println!("in test");
-        let login = fetch_login().await?;
+        let login = check_login().await?;
         println!("fetch_login: {:?}", login);
 
         Ok(())

@@ -38,7 +38,7 @@ mod post {
     ) -> impl IntoResponse {
         let user = match auth_session.authenticate(creds.clone()).await {
             Ok(Some(user)) => user,
-            Ok(None) => return (StatusCode::UNAUTHORIZED, "authentication failed").into_response(),
+            Ok(None) => return StatusCode::UNAUTHORIZED.into_response(),
             Err(_) => return StatusCode::INTERNAL_SERVER_ERROR.into_response(),
         };
 

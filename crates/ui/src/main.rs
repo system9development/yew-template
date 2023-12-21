@@ -2,6 +2,9 @@ mod pages;
 mod routes;
 use routes::*;
 
+use eyre::Result;
+use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt, EnvFilter};
+use tracing_wasm::{WASMLayer, WASMLayerConfig};
 use yew::prelude::*;
 use yew_router::prelude::*;
 
@@ -16,6 +19,14 @@ fn app() -> Html {
 
 fn main() {
     console_error_panic_hook::set_once();
-    tracing_wasm::set_as_global_default();
+
+    tracing_subscriber::registry()
+        .with(WASMLayer::new(WASMLayerConfig::default()))
+        .with(EnvFilter::new(
+            std::env::var("RUST_LOG").unwrap_or_else(|_| "ui=debug".into()),
+        ))
+        .try_init()
+        .expect("failed to initialize tracing subscriber...");
+    tracing::info!("Starting app..");
     yew::Renderer::<App>::new().render();
 }
