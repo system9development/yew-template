@@ -8,7 +8,7 @@ edition = "2021"
 [dependencies]
 async-trait = "0.1.74"
 axum = "0.7.2"
-axum-login = { version = "0.10.2", path = "../../../axum-login/axum-login" }
+axum-login = { version = "0.10.2"}
 common = { version = "0.1.0", path = "../common" }
 eyre = "0.6.11"
 password-auth = "1.0.0"
