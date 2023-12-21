@@ -2,7 +2,7 @@ mod pages;
 mod routes;
 use routes::*;
 
-use eyre::Result;
+
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt, EnvFilter};
 use tracing_wasm::{WASMLayer, WASMLayerConfig};
 use yew::prelude::*;
