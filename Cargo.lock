@@ -2000,6 +2000,7 @@ dependencies = [
  "axum",
  "axum-login",
  "common",
+ "dotenvy",
  "eyre",
  "password-auth",
  "serde",

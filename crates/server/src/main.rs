@@ -2,8 +2,7 @@ mod users;
 
 use axum::{
     error_handling::HandleErrorLayer,
-    http::{StatusCode},
-    response::{IntoResponse},
+    http::StatusCode,
     BoxError,
 };
 use axum_login::{
@@ -13,30 +12,22 @@ use axum_login::{
 };
 use sqlx::PgPool;
 use time::Duration;
-use tower::{Layer, ServiceBuilder};
+use tower::ServiceBuilder;
+use tower_http::cors::CorsLayer;
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt, EnvFilter};
 mod auth;
 mod protected;
 use crate::users::Backend;
 use eyre::Result;
 
-
-
-
-
-
-
-
-use tower_http::cors::{CorsLayer};
-
-const STATIC_DIR: &str = "dist/";
 pub struct App {
     db: PgPool,
 }
 
 impl App {
     pub async fn new() -> Result<Self> {
-        let db = PgPool::connect("postgresql://root:toor@localhost:5432/db").await?;
+        dotenvy::dotenv()?;
+        let db = PgPool::connect(&std::env::var("DATABASE_URL")?).await?;
         sqlx::migrate!().run(&db).await?;
         Ok(Self { db })
     }
