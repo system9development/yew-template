@@ -16,9 +16,7 @@ pub(crate) enum Route {
 pub(crate) fn switch(routes: Route) -> Html {
     match routes {
         Route::Home => html! {
-            <h1>
                 <Home/>
-            </h1>
         },
         Route::Login => html! {
             <Login/>

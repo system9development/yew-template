@@ -30,14 +30,15 @@ pub(crate) fn home() -> Html {
     let navigator = use_navigator().unwrap();
 
     html! {
-        <div>
-            {
-                if state.loading {
-                    html! { "Loading" }
-                } else {
-                    html! {}
-                }
-            }
+        <div class={classes!("border-2")}>
+            // TODO: Loading animation
+            // {
+            //     if state.loading {
+            //         html! {}
+            //     } else {
+            //         html! {}
+            //     }
+            // }
             {
                 if let Some(data) = &state.data {
                     html! {

@@ -55,46 +55,57 @@ pub(crate) fn login() -> Html {
     });
 
     html! {
-        <div class={classes!("flex", "center", "full")}>
-            <form class={classes!("flex","login")}>
-                  <input id={"username"} class={classes!("login-input")} type={"email"} placeholder={"email"}/>
-                  <input id={"password"} class={classes!("login-input")} type={"password"} placeholder={"password"}/>
-                  <input  class={classes!("login-input", "full")} value={"submit"} type={"submit"} onclick={onclick}/>
+        <div class={classes!("grid", "grid-cols-1", "w-full", "h-screen")}>
+            <div class={classes!("flex", "center", "w-full", "md:p-8", "items-center", "justify-center", "h-full")}>
+                <form class={classes!("grid","grid-cols-1","login", "w-full", "md:w-1/2", "space-y-4", "justify-center")}>
+                    <input id={"username"} class={classes!("p-2", "border-b-2")} type={"email"} placeholder={"email"}/>
+                    <input id={"password"} class={classes!("p-2", "border-b-2")} type={"password"} placeholder={"password"}/>
+                    <div class={classes!("flex", "justify-center")}>
+                        <input  class={classes!("border", "p-2", "w-1/2", "center")} value={"submit"} type={"submit"} onclick={onclick}/>
+                    </div>
+                        // TODO: Loading animation
+                        // {
+                        //     if fetch_post_login.loading {
+                        //         html! {}
+                        //     } else {
+                        //         html! {}
+                        //     }
+                        // }
+                        {
+                            if let Some(data) = &fetch_post_login.data {
+                                navigator.push(&Route::Home);
+                                html! {
+                                    <p>{format!("{}", data)}</p>
+                                }
 
-                    {
-                        if fetch_post_login.loading {
-                            html! { "Loading" }
-                        } else {
-                            html! {}
-                        }
-                    }
-                    {
-                        if let Some(data) = &fetch_post_login.data {
-                            navigator.push(&Route::Home);
-                            html! {
-                                <p>{format!("{}", data)}</p>
+                            } else {
+                                html! {}
                             }
-
-                        } else {
-                            html! {}
                         }
-                    }
+                </form>
+            </div>
+            <div class={classes!("flex", "justify-center", "m-4")}>
                     {
-                        if let Some(_error) = &fetch_post_login.error {
-                            html! {
-                                <p>
-                                { format!("authentication failed, please check your username and password") }
-                                </p>
+                            if let Some(_error) = &fetch_post_login.error {
+                                html! {
+                                        <p class={classes!("text-red-500")}>
+                                        { format!("authentication failed, please check your username and password") }
+                                        </p>
+
+                                }
+                            } else {
+                                html! {
+                                        <p class={classes!("invisible", "text-red-500")}>
+                                        { format!("authentication failed, please check your username and password") }
+                                        </p>
+
+                                }
                             }
-                        } else {
-                            html! {}
-                        }
                     }
 
+            </div>
 
-
-
-            </form>
         </div>
+
     }
 }
