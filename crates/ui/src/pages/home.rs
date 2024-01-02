@@ -60,24 +60,3 @@ pub(crate) fn home() -> Html {
         </div>
     }
 }
-
-// Your main code here
-
-#[cfg(test)]
-mod tests {
-    use super::*; // Import all the necessary elements from the outer module
-    use tokio;
-    #[tokio::test]
-    async fn test_my_function() -> Result<()> {
-        // let result = my_function(); // Replace with your function
-        // assert!(result.is_expected()); // Replace with your condition
-        // You can add more assertions here
-        println!("in test");
-        let login = check_login().await?;
-        println!("fetch_login: {:?}", login);
-
-        Ok(())
-    }
-
-    // You can add more test functions here
-}
