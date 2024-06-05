@@ -17,6 +17,7 @@ tracing-subscriber = { version = "0.3.18", features = ["env-filter"] }
 tracing-wasm = "0.2.1"
 web-sys = { version = "0.3.66", features = ["RequestCredentials"] }
 yew = { version = "0.21.0", features = ["csr"] }
+yewdux = "0.10.0"
 yew-hooks = "0.3.0"
 yew-router = "0.18.0"
 
